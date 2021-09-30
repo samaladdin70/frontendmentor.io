@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <title>Frontend Mentor | Order summary card</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    * {
+      margin: auto;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background-color: hsl(225, 100%, 94%);
+      background-image: url("images/pattern-background-desktop.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+
+    #container {
+      margin-top: 40px;
+      max-width: 450px;
+      height: 500;
+      background-color: white;
+      border-radius: 14px;
+    }
+
+    .header {
+      width: 100%;
+      /* border-radius: 14px 14px 0 0;*/
+    }
+
+    .table {
+      display: table;
+      width: 90%;
+      height: 80px;
+      background-color: rgba(128, 128, 128, 0.164);
+      border-radius: 5px;
+    }
+
+    .col {
+      display: table-cell;
+      position: relative;
+      height: 50px;
+
+    }
+
+    .buttom {
+      width: 90%;
+    }
+
+    button {
+      width: 100%;
+      height: 50px;
+      border: none;
+      background-color: blue;
+      color: white;
+      box-shadow: 2px 6px 6px gray;
+      border-radius: 14px;
+    }
+
+    button:hover {
+      cursor: pointer;
+    }
+
+    button:active {
+      box-shadow: 1px 4px 4px gray;
+      transform: translateY(2px);
+    }
+
+    section {
+      margin: 20px;
+    }
+
+
+    footer {
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
+
+    @media screen and (max-width:400px) {
+      .pad {
+        padding-left: 100px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <center id="container">
+
+    <header class="header">
+      <img src="images/illustration-hero.svg" alt="" style="border-radius: 14px 14px 0px 0px; width:100%;" id="img">
+    </header>
+    <main>
+      <section>
+        <h1>Order Summary</h1>
+        <p>You can now listen to millions of songs, audiobooks, and podcasts on any
+          device anywhere you like!</p>
+      </section>
+      <section class="table">
+        <div class="col"><img src="images/icon-music.svg" alt="" style="position: absolute; left: 15px; top:15px;">
+        </div>
+        <div class="col pad" style="padding-left: 30px; padding-top: 20px;">
+          <h3>Annual Plan</h3>
+          <p>$59.99/year</p>
+        </div>
+        <div class="col"><a href="#">Change</a></div>
+      </section>
+      <section class="buttom">
+        <button>Proceed to Payment</button>
+      </section>
+    </main>
+    <footer><a href="#" style="text-decoration: none;">Cancel Order</a>
+      <div class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+        Coded by <a href="#">Aladdin</a>.
+      </div>
+    </footer>
+
+
+
+  </center>
+
+
+</body>
+
+</html>
