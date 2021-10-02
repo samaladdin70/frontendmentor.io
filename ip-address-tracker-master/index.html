@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+
+  <title>Frontend Mentor | IP Address Tracker</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    * {
+      margin: auto;
+      box-sizing: border-box;
+    }
+
+    .container {
+      /*  max-width: 1440;*/
+      height: 600px;
+    }
+
+    header {
+      width: 100%;
+      height: 33%;
+      position: relative;
+      background-image: url(images/pattern-bg.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+
+
+    .inputIPdiv {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: content-box;
+
+    }
+
+    h2 {
+      color: white;
+    }
+
+    .adjust {
+      background-color: black;
+      width: 40%;
+      border-radius: 10px;
+      border: none;
+    }
+
+    .inputForm {
+      display: inline-block;
+      width: 87%;
+      /* padding: 5px;*/
+      margin: 0px;
+      height: 60px;
+
+      margin: 0;
+      padding-top: 0px;
+      /* padding-bottom: 5px;*/
+      font-size: 16px;
+      font-family: 'Courier New', Courier, monospace;
+      box-sizing: content-box;
+    }
+
+    #inputForm {
+      width: 100%;
+      height: 95%;
+      padding-left: 5px;
+      outline: none;
+      border: none;
+      border-radius: 10px 0px 0px 10px;
+    }
+
+    .btnForm {
+      display: inline-block;
+      width: 11%;
+      height: 60px;
+      line-height: 60px;
+      margin: 0px;
+      outline: none;
+      background-color: black;
+      border: none;
+
+      border-radius: 0px 10px 10px 0px;
+      box-sizing: content-box;
+    }
+
+    .btnForm:hover {
+      cursor: pointer;
+    }
+
+    .outputData {
+      position: absolute;
+      top: 180px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 16px;
+      font-family: 'Courier New', Courier, monospace;
+      display: none;
+
+      width: 70%;
+      padding: 20px;
+      border: 1px solid gray;
+      background-color: white;
+      border-radius: 10px;
+      z-index: 2;
+    }
+
+    .cell {
+      font-size: 16px;
+      font-family: 'Courier New', Courier, monospace;
+      display: table-cell;
+      width: 25%;
+      height: 100px;
+      line-height: 100px;
+    }
+
+    .bordercell {
+      border-left: 1px solid gray;
+    }
+
+    .main {
+      position: absolute;
+      top: 195px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      height: 70%;
+      border: 1px solid black;
+      z-index: -1;
+    }
+
+    @media screen and (max-width:720px) {
+      .cell {
+        display: block;
+        border: none;
+      }
+
+      .adjust {
+        width: 90%;
+      }
+
+      .btnForm {
+        width: 20%;
+      }
+
+      .inputForm {
+        width: 78%;
+      }
+    }
+
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
+  </style>
+</head>
+
+<body>
+  <center class="container">
+    <header>
+      <div>
+        <!--  <img src="images/pattern-bg.png" alt="" id="headImg">-->
+      </div>
+
+      <div class="inputIPdiv">
+        <h2>IP Address Tracker</h2><br>
+        <div class="adjust">
+          <div class="inputForm"> <input type="text" name="" id="inputForm"
+              placeholder="Search for any IP address or domain">
+          </div>
+          <div class="btnForm" id="btn"><img src="images/icon-arrow.svg" alt=""></div>
+        </div>
+
+
+      </div>
+
+    </header>
+
+    <main id="main" class="main">
+
+    </main>
+    <section id="outputData" class="outputData">
+      <div id="ipaddress" class="cell"></div>
+      <div id="location" class="cell bordercell"></div>
+      <div id="timezone" class="cell bordercell"></div>
+      <div id="isp" class="cell bordercell"></div>
+    </section>
+
+  </center>
+
+
+
+
+
+
+
+
+
+  <!-- add offset value dynamically using the API -->
+
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by <a href="#">Aladdin</a>.
+  </div>
+  <script>
+    let btn = document.getElementById("btn");
+    let outputData = document.getElementById("outputData");
+    let inputForm = document.getElementById("inputForm");
+    var mymap;
+    btn.addEventListener("click", () => {
+      if (outputData.style.display == "none" || outputData.style.display == "") {
+        outputData.style.display = "table";
+      } else {
+        outputData.style.display = "none";
+      }
+    })
+
+    url = "https://api.ipify.org?format=json";
+    fetch(url).then(response => response.json()).then(data => {
+      // console.log(data);
+      inputForm.value = data.ip;
+      let url2 = 'https://geo.ipify.org/api/v1?apiKey=YOUR_KEY&ipAddress=' + inputForm.value + '';
+      fetch(url2).then(response2 => response2.json()).then(data2 => {
+        // console.log(data2);
+        // console.log(data2.ip);
+        // console.log(data2.location.city);
+        // console.log(data2.location.country);
+        // console.log(data2.location.geonameId);
+        // console.log(data2.location.lat);
+        // console.log(data2.location.lng);
+        // console.log(data2.location.timezone);
+
+        mymap = L.map('main').setView([data2.location.lat, data2.location.lng], 13);
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+          maxZoom: 18,
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          id: 'mapbox/streets-v11',
+          // id: 'mapbox/satellite-v9',
+          tileSize: 512,
+          zoomOffset: -1
+        }).addTo(mymap);
+
+        L.marker([data2.location.lat, data2.location.lng]).addTo(mymap);
+
+        L.circle([data2.location.lat, data2.location.lng], {
+          color: 'red',
+          fillColor: '#f03',
+          fillOpacity: 0.5,
+          radius: 500
+        }).addTo(mymap);
+
+        L.polygon([
+          [51.509, -0.08],
+          [51.503, -0.06],
+          [51.51, -0.047]
+        ]).addTo(mymap);
+
+        document.getElementById("ipaddress").innerHTML = '<h6>IP Address</h6>' + data2.ip + '';
+        document.getElementById("location").innerHTML = '<h6>Location</h6>' + data2.location.city + ', ' + data2.location.country + '';
+        document.getElementById("timezone").innerHTML = '<h6>Timezone</h6>UTC ' + data2.location.timezone + '';
+        document.getElementById("isp").innerHTML = '<h6>ISP</h6>' + data2.isp + '';
+
+
+
+      })
+      // document.getElementById("main").innerHTML = "";
+    })
+    inputForm.addEventListener("input", () => {
+      let url3 = 'https://geo.ipify.org/api/v1?apiKey=YOUR_KEY&ipAddress=' + inputForm.value + '';
+      fetch(url3).then(response3 => response3.json()).then(data3 => {
+        // console.log(data3);
+        // console.log(data3.ip);
+        // console.log(data3.location.city);
+        //  console.log(data3.location.country);
+        //  console.log(data3.location.geonameId);
+        //  console.log(data3.location.lat);
+        // console.log(data3.location.lng);
+        //  console.log(data3.location.timezone);
+        mymap = "";
+        mymap = L.map('main').setView([data3.location.lat, data3.location.lng], 13);
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+          maxZoom: 18,
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          id: 'mapbox/streets-v11',
+          // id: 'mapbox/satellite-v9',
+          tileSize: 512,
+          zoomOffset: -1
+        }).addTo(mymap);
+
+        L.marker([data3.location.lat, data3.location.lng]).addTo(mymap);
+
+        L.circle([data3.location.lat, data3.location.lng], {
+          color: 'red',
+          fillColor: '#f03',
+          fillOpacity: 0.5,
+          radius: 500
+        }).addTo(mymap);
+
+        L.polygon([
+          [51.509, -0.08],
+          [51.503, -0.06],
+          [51.51, -0.047]
+        ]).addTo(mymap);
+
+        document.getElementById("ipaddress").innerHTML = '<h6>IP Address</h6>' + data3.ip + '';
+        document.getElementById("location").innerHTML = '<h6>Location</h6>' + data3.location.city + ', ' + data3.location.country + '';
+        document.getElementById("timezone").innerHTML = '<h6>Timezone</h6>UTC ' + data3.location.timezone + '';
+        document.getElementById("isp").innerHTML = '<h6>ISP</h6>' + data3.isp + '';
+
+
+
+      })
+    })
+  </script>
+  <!-- https://geo.ipify.org/api/v1?apiKey=at_tA5UWSwzvV9ZZwcVTlmweZQZswefA&ipAddress=197.57.223.96  -->
+</body>
+
+</html>
